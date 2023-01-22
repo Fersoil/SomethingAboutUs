@@ -1,0 +1,14 @@
+name: spompik
+title: spompik
+username:
+account: fersoil
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7992996
+bundleId: 6760760
+url: https://fersoil.shinyapps.io/spompik/
+when: 1674395891.66397
+lastSyncTime: 1674395891.66398
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|app_5.R|app_tymek_developement.R|app1hehe.R|co trzeba.txt|json2csv.py|json2csvMerge.py|README.md|suwak_app_proby.R|test.R|topki.R|zabijesiezara/.httr-oauth|zabijesiezara/.Rhistory|zabijesiezara/app.R|zabijesiezara/ui.R
