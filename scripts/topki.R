@@ -7,7 +7,7 @@ get_top_apps <-  function(df) {
     select(app,duration) %>% 
     mutate(duration= sum(duration)) %>% 
     
-    filter(app!="loginwindow", app!="LockApp", app!="Podgląd", app!= "ScreenSaverEngine", app != 'ApplicationFrameHost') %>% 
+    filter(app!="loginwindow", app!="LockApp", app!= "ScreenSaverEngine", app != 'ApplicationFrameHost', app != "unknown", app!="Code", app != "Wiadomości") %>% 
     
     mutate(app = case_when(app=="rstudio" ~ "RStudio",
                                 app=="chrome" ~ "Google Chrome",
@@ -17,6 +17,11 @@ get_top_apps <-  function(df) {
                                 app=="idea64" ~ "IntelliJ",
                                 app=="ONENOTE" ~ "OneNote",
                                 app=="Teams" ~ "Teams",
+                                app=="Microsoft Teams" ~ "Teams",
+                                app=="pycharm64" ~"PyCharm",
+                                app=="Code - Insiders" ~ "Visual Studio Code",
+                                app=="explorer" ~ "Eksplorator plików",
+                                app=="msedge" ~ "Microsoft Edge",
                                 T~app)
                                 ) -> df1 
     

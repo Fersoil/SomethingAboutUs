@@ -24,7 +24,7 @@ access_token <- get_spotify_access_token()
 # ?adujemy pliki
 
 PERSON_CHOICES <- c("Natalia", "Wojtek", "Tymek")
-PERSON <- "Tymek"
+PERSON <- "Natalia"
 
 
 START_DATE <- as.Date("2022-12-01")
@@ -88,20 +88,21 @@ write.csv(df_merged, paste0("data/", PERSON, "_merged.csv"), fileEncoding = "UTF
 
 #ZLICZAMY MINUTY PRZED KOMPEM
 
-df_afk <- read.csv("data/Natalia_afk.csv")
+df_afk1 <- read.csv("data/Natalia_afk2.csv")
 
-df_afk %>% 
+df_afk1 %>% 
   filter(status=="not-afk") %>% 
   summarise(suma=sum(duration)) %>% 
-  mutate(suma=suma/(3600))->df_afk
+  mutate(suma=suma/(3600))->df_afk1
 
-write.csv(df_afk, paste0("data/", PERSON, "_afk.csv"), fileEncoding = "UTF-8")
+
 
 #ZLICZAMY MINUTY PRZESLUCHANEJ MUZY
 
-df_spotify1 <- read.csv("data/Natalia_spotify.csv")
+df_spotify1 <- read.csv("data/Wojtek_raw_spotify.csv")
 df_spotify1 %>% 
-  summarise(suma= sum(duration)) %>% 
-  mutate(suma=suma/60)->df_spotify1
-write.csv(df_spotify1, paste0("data/", PERSON, "_spotifysum.csv"), fileEncoding = "UTF-8")
+  filter(substr(endTime, 1, 4)=='2022' & substr(endTime,6,7)=='12') %>% 
+  summarise(suma= sum(msPlayed)) %>% 
+  mutate(suma=suma/3600000)->df_spotify1
 
+df_spotify1

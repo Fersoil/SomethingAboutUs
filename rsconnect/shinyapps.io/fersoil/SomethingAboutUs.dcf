@@ -1,0 +1,13 @@
+name: SomethingAboutUs
+title: SomethingAboutUs
+username:
+account: fersoil
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8107930
+bundleId: 6766309
+url: https://fersoil.shinyapps.io/SomethingAboutUs/
+when: 1674519327.20224
+lastSyncTime: 1674519327.20225
+asMultiple: FALSE
+asStatic: FALSE

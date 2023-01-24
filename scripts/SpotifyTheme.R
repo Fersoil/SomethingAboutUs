@@ -109,6 +109,7 @@ theme_spotify_calendar <- function(base_size=14, base_family="Gotham") {
             legend.title = element_text(size = 16, colour = 'white', margin = margin(0, 10,0,0)),
             legend.margin = margin(5, 25, 5, 25),
             plot.margin=unit(c(10,5,5,5),"mm"),
+            legend.key.width = unit(1, 'cm'),
             
             strip.background=element_rect(colour='#121212',fill='#121212'),
             strip.text = element_text(face="bold", colour = '#1DB954', size=18)

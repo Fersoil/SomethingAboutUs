@@ -112,8 +112,8 @@ read_kompik_data <- function(filename, sufix = "_computer") {
       rename(startTime = timestamp) %>%
       mutate(endTime = startTime + ceiling(duration)) %>%
       mutate(date = as.Date(startTime)) %>%
-      mutate(app = gsub("\\..*", "", app)) %>%
-      mutate(app = ifelse(grepl("Messenger", title, fixed = TRUE), "Messenger", app)) # messenger in chrome
+      mutate(app = gsub("\\..*", "", app))# %>%
+      #mutate(app = ifelse(grepl("Messenger", title, fixed = TRUE), "Messenger", app)) # messenger in chrome
   } else {
     df <- df %>%
       mutate(date = as.Date(date)) %>%

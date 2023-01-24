@@ -13,6 +13,7 @@
         color: white;
       }
       
+      
       a:hover{
         color:white;
       }
@@ -41,11 +42,11 @@
       }
       .content-wrapper .content {
           background-color: #121212;
-          margin-bottom: 100px;
+          margin-bottom: 90px;
           
       }
       .content{
-        margin-bottom: 100px;
+        margin-bottom: 90px;
         min-height: 1000px;
       }
       
@@ -59,8 +60,7 @@
       }
       .logo {
         background-color:  #040404 !important;
-        position:fixed;
-        font-family: Times New Roman; 
+        position:fixed; 
       }
       
       
@@ -92,6 +92,8 @@
         object-fit: cover;
         height: 162px;
         width: 162px;
+        
+        margin-top: 9px;
       }
 
 
@@ -129,10 +131,11 @@
       }
       .us-image{
   display: block;
-        width: 80%;
+        width: 90%;
               
         margin-left: auto;
         margin-right: auto;
+        margin-top: 15px;
       }
       .box11:hover {
         background-color: #2a2a2a
@@ -146,6 +149,9 @@
         transition: 0.3s;
         margin: 20px;
         border-radius:5px;
+        
+        display: flex;
+        
       }
       .us-box{
         background-color: #242424;
@@ -179,6 +185,8 @@
         color: #b8c7ce;
         height:20px;
 
+      }
+      .image-container {
       }
 
 
@@ -226,7 +234,7 @@
         bottom: 0;
         width: 100%;
         background-color: #2a2a2a;
-        height: 100px;
+        height: 90px;
         left: 0;
         z-index: 1000;
       }
@@ -322,9 +330,9 @@
       }
       
       .our-image {
-    vertical-align: middle;
-    position: fixed;
-    bottom: 100px;
+      vertical-align: middle;
+      position: fixed;
+      bottom: 90px;
       }
       .left-caption{
       justify-content: left;

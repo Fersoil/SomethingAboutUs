@@ -12,7 +12,7 @@ source("scripts/SpotifyTheme.R")
 source("scripts/MergeTimestamps.R")
 source("scripts/heatmap_data.R")
 
-pagorki <- function(df, fill=TRUE, 
+pagorki_color <- function(df, fill=TRUE, 
                     fill_column = "category", weight = TRUE) {
   # df - ramka danych zawieraj?ca dane kt?re nale?y podsumowa?
   # start_date - pocz?tek okresu filtrowania
@@ -25,13 +25,45 @@ pagorki <- function(df, fill=TRUE,
     mutate(time = as.ITime(startTime)) %>% 
     ggplot(aes(x = time)) +
     scale_x_continuous(breaks = seq(0, 86400, 3600*6), labels = paste(seq(0, 24, 6), "00", sep = ":"),
-                       limits = c(0, 86400), expand = c(0,150)) +
+                       limits = c(0, 86400), expand = c(0,160)) +
     theme_spotify_base() +
-    geom_density(adjust=1.5, alpha=.4)
+    geom_density(adjust=1.5, alpha=.4, size=1.5)
     
   
   if (fill == TRUE && fill_column %in% colnames(df)) {
-    p <- p + aes(fill=!!sym(fill_column))
+    p <- p + aes(color=!!sym(fill_column))
+    if(weight == TRUE) {
+      p <- p + aes(y = after_stat(count))
+    }
+  } else {
+    p <- p + aes(color = "")
+  }
+  p <- p + scale_y_continuous(expand=c(0,0))
+  p # troche trzeba ten desity opisac co to dokladnie jest 
+
+}
+
+
+pagorki_fill <- function(df, fill=TRUE, 
+                         fill_column = "category", weight = TRUE) {
+  # df - ramka danych zawieraj?ca dane kt?re nale?y podsumowa?
+  # start_date - pocz?tek okresu filtrowania
+  # end_date - koniec okresu filtrowania
+  # fill - czy dane mają kategorie
+  # fill_column - nazwa kolumny z kategoriami
+  # weight - czy dane są zależne od siebie i gęstość w sumie powinna wynosić 1
+  
+  p <- df %>% 
+    mutate(time = as.ITime(startTime)) %>% 
+    ggplot(aes(x = time)) +
+    scale_x_continuous(breaks = seq(0, 86400, 3600*6), labels = paste(seq(0, 24, 6), "00", sep = ":"),
+                       limits = c(0, 86400), expand = c(0,160)) +
+    theme_spotify_base() +
+    geom_density(adjust=1.5, alpha=.4)
+  
+  
+  if (fill == TRUE && fill_column %in% colnames(df)) {
+    p <- p + aes(fill = !!sym(fill_column))
     if(weight == TRUE) {
       p <- p + aes(y = after_stat(count))
     }
@@ -40,7 +72,7 @@ pagorki <- function(df, fill=TRUE,
   }
   p <- p + scale_y_continuous(expand=c(0,0))
   p # troche trzeba ten desity opisac co to dokladnie jest 
-
+  
 }
 
 
@@ -101,7 +133,7 @@ generate_githeatmap <- function(df,title="title", subtitle = "",
 #df_kompik <- read_kompik_data("Wojtasauce (1)")
 alluvial_merged <- function(df_merged) {
   df_merged %>%
-    #mutate(artistName = ifelse(substring(artistName,1,4) == "Jos,", "Jose Feliciano", artistName)) %>%
+    mutate(artistName = ifelse(substring(artistName,1,4) == "Jos,", "Jose Feliciano", artistName)) %>%
     group_by(energy_level, artistName, category) %>% 
     summarize(duration = sum(duration)) -> df1
   
@@ -129,9 +161,9 @@ alluvial_merged <- function(df_merged) {
       group_by(energy_level) %>%
       summarise(liczba = n()) -> df_counter
     
-    No_fast <- as.integer(df_counter[df_counter$energy_level=='fast',]$liczba[1])
-    No_medium <-as.integer(df_counter[df_counter$energy_level=='medium',]$liczba[1])
-    No_slow <-as.integer(df_counter[df_counter$energy_level=='slow',]$liczba[1])
+    No_fast <- as.integer(df_counter[df_counter$energy_level=='fast',]$liczba[1]) - 1
+    No_medium <-as.integer(df_counter[df_counter$energy_level=='medium',]$liczba[1]) - 1
+    No_slow <-as.integer(df_counter[df_counter$energy_level=='slow',]$liczba[1]) - 1
     
     Block_fast <- paste0(Top_fast, " and ", No_fast, " others...")
     Block_medium <- paste0(Top_medium, " and ", No_medium, " others...")
@@ -149,9 +181,11 @@ alluvial_merged <- function(df_merged) {
       summarise(duration = sum(duration)) -> dfinal
     dfinal %>% 
     ggplot(aes(y = duration, axis1 = energy_level, axis2 = artistName)) +
-    geom_alluvium(aes(fill = category)) +
+    geom_alluvium(aes(fill = category), width = 1/24) +
     geom_stratum(width = 1/12, fill = "black", color = "grey") +
     geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
+    scale_x_continuous(breaks = seq(1,2), labels = c("Music pace", "Artist Name"))+
+    ylab("Seconds")+
     theme_spotify_base() 
   
 }
